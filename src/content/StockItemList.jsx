@@ -1,31 +1,22 @@
-import React from "react";
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import {
     StructuredListWrapper, StructuredListHead, StructuredListRow,
-    StructuredListCell, StructuredListBody
+    StructuredListCell, StructuredListBody, StructuredListSkeleton
 } from '@carbon/react';
 
-const DEFAULT_ITEMS = [
-    {
-        name: 'Item 1',
-        stock: 10,
-        unitPrice: 51.2,
-        manufacturer: 'Sony'
-    },
-    {
-        name: 'Item 2',
-        stock: 50,
-        unitPrice: 10,
-        manufacturer: 'LG'
-    },
-]
-
-export default function StockItemList() {
-    const items = DEFAULT_ITEMS;
+export default function StockItemList(props) {
+    const { isLoading, error, data } = useQuery(['stock-items'], props.stockService.listStockItems);
 
     return (
-        <div className="stock-items-list">
+        <div className='stock-items-list'>
             <h2>Stock Items</h2>
-            <StructuredListWrapper>
+            {isLoading ?
+                <StructuredListSkeleton />
+                : error ?
+                    'Error retrieving stock items'
+                :
+                <StructuredListWrapper>
                 <StructuredListHead>
                     <StructuredListRow head>
                         <StructuredListCell head>Name</StructuredListCell>
@@ -35,8 +26,8 @@ export default function StockItemList() {
                     </StructuredListRow>
                 </StructuredListHead>
                 <StructuredListBody>
-                    {items.map(item => (
-                        <StructuredListRow>
+                    {data.map(item => (
+                        <StructuredListRow key={item.id}>
                             <StructuredListCell noWrap>{item.name}</StructuredListCell>
                             <StructuredListCell noWrap>{item.stock}</StructuredListCell>
                             <StructuredListCell noWrap>{item.unitPrice}</StructuredListCell>
@@ -44,7 +35,7 @@ export default function StockItemList() {
                         </StructuredListRow>
                     ))}
                 </StructuredListBody>
-            </StructuredListWrapper>
+            </StructuredListWrapper>}
         </div>
     );
 }
