@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import UIShell from './content/UIShell/UIShell';
 import './App.scss';
-import { StockItemMockService } from "./services/stock-item-mock.service";
+import { StockItemService } from "./services/stock-item.service";
 
 class App extends Component {
-  constructor(props) {
+constructor(props) {
     super(props);
 
-    this.stockService = props.stockService || new StockItemMockService();
-  }
+    this.stockService = props.stockService || new StockItemService();
+}
 
-  render() {
+render() {
     return (
-      <div className="app">
+    <div className="app">
         <UIShell stockService={this.stockService} />
-      </div>
+    </div>
     );
-  }
+}
 }
 
 export default App;
