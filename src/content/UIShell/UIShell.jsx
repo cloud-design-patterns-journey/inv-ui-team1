@@ -5,6 +5,7 @@ import {
     HeaderGlobalAction, SideNav, SideNavItems, Content,
     SideNavMenu, SideNavMenuItem, Theme
 } from '@carbon/react';
+import StockItemList from "../StockItemList";
 import {
     Notification,
     Search,
@@ -78,6 +79,13 @@ class UIShell extends React.Component {
                                                     onClick={() => { this.setState({ activeItem: '/' }) }}>
                                                     Overview
                                                 </SideNavMenuItem>
+                                                <SideNavMenu renderIcon={Fade} title="Inventory" defaultExpanded>
+                                                    <SideNavMenuItem element={Link} to='/inventory/items'
+                                                        isActive={this.state.activeItem === '/inventory/items'}
+                                                        onClick={() => { this.setState({ activeItem: '/inventory/items' }) }}>
+                                                        Items
+                                                    </SideNavMenuItem>
+                                                </SideNavMenu>
                                                 <SideNavMenu renderIcon={Fade} title="Management">
                                                     <SideNavMenuItem href="#">
                                                         Link
@@ -109,9 +117,10 @@ class UIShell extends React.Component {
                 </Theme>
                 <Content className='content'>
                     <Routes>
-                        <Route path="/" element={<LandingPage />} />
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/inventory/items" element={<StockItemList />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
                 </Content>
             </BrowserRouter>
         );
