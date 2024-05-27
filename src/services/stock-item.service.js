@@ -1,16 +1,20 @@
 import axios from "axios";
 
 export class StockItemService {
-    constructor(baseUrl) {
-        this.baseUrl = baseUrl || '/api';
-    }
+  constructor(baseUrl) {
+    this.baseUrl = baseUrl || "/api";
+  }
 
-    async listStockItems() {
-        return axios({
-            url: '/api/graphql',
-            method: "POST",
-            data: {
-                query: `
+  async listStockItems() {
+    return axios({
+      url: "/api/graphql",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer <YOUR TOKEN>`,
+      },
+      data: {
+        query: `
                 {
                     stockItems {
                         id
@@ -21,8 +25,8 @@ export class StockItemService {
                         unitPrice
                     }
                 }
-                `
-            }
-        }).then(response => response.data.data.stockItems);
-    }
+                `,
+      },
+    }).then((response) => response.data.data.stockItems);
+  }
 }
