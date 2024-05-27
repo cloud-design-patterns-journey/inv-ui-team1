@@ -20,6 +20,33 @@ npm install -g yarn
 yarn install
 ```
 
+#### Get KC token
+
+From any HTTP client, once your Keycloak server is running, you can get a token by sending a POST request to the following URL:
+```sh
+http://{{host}}:8000/realms/patterns/protocol/openid-connect/token
+```
+
+setting up **x-www-form-urlencoded** body with the following parameters:
+
+```sh
+client_id: patterns
+client_secret: <client_secret>
+grant_type: password
+username: <username>
+password: <password>
+```
+
+<img src="./public/img/KC_patterns.png" alt="Keycloak token" />
+
+At the moment we did not implement login page, so you need to get the token manually. 
+
+Then you can set the token in the `stock-item-service.js` file:
+
+```js
+Authorization: `Bearer <YOUR TOKEN>`,
+```
+
 ##### Local development
 
 To run application for local development and get live updates on code changes:
