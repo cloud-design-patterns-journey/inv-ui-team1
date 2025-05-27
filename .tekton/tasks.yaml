@@ -99,6 +99,7 @@ spec:
         else
           echo "Creating deployment $(params.app-name)"
           kubectl create deploy $(params.app-name) --image $(params.image) --port $(params.app-port)
+          kubectl set env --from=secret/$(params.app-name)-config deployment/$(params.app-name) # NEW LINE
           kubectl expose deploy $(params.app-name) --port $(params.app-port)
           oc expose svc $(params.app-name)
         fi
