@@ -17,6 +17,7 @@ import ErrorBoundary from "../../components/ErrorBoundary";
 import LandingPage from '../LandingPage';
 import NotFound from '../../components/NotFound';
 import StockItemList from "../StockItemList";
+import AuditPage from "../AuditPage";
 
 
 class UIShell extends React.Component {
@@ -86,15 +87,11 @@ class UIShell extends React.Component {
                                                         Items
                                                     </SideNavMenuItem>
                                                 </SideNavMenu>
-                                                <SideNavMenu renderIcon={Fade} title="Management">
-                                                    <SideNavMenuItem href="#">
-                                                        Link
-                                                    </SideNavMenuItem>
-                                                    <SideNavMenuItem href="#">
-                                                        Link
-                                                    </SideNavMenuItem>
-                                                    <SideNavMenuItem href="#">
-                                                        Link
+                                                <SideNavMenu renderIcon={Fade} title="Management" defaultExpanded>
+                                                    <SideNavMenuItem element={Link} to='/management/audit'
+                                                        isActive={this.state.activeItem === '/management/audit'}
+                                                        onClick={() => { this.setState({ activeItem: '/management/audit' }) }}>
+                                                        Audit
                                                     </SideNavMenuItem>
                                                 </SideNavMenu>
                                                 <SideNavMenu
@@ -119,6 +116,7 @@ class UIShell extends React.Component {
                     <Routes>
                         <Route path="/" element={<LandingPage />} />
                         <Route path="/inventory/items" element={<StockItemList stockService={this.props.stockService} />} />
+                        <Route path="/management/audit" element={<AuditPage auditService={this.props.auditService} />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Content>
